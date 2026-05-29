@@ -1,26 +1,18 @@
-@import "tailwindcss";
+@layer theme, base, components, utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import "tailwindcss/theme.css" layer(theme);
+/* Skip importing preflight so it doesn't strip base HTML styles */
+/* @import "tailwindcss/preflight.css" layer(base); */
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  --font-grenze-gotisch: var(--font-grenze-gotisch);
+  --font-pixel: var(--font-pixel);
+  --font-garamond: var(--font-garamond);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer components {
+  .text-copy{
+    @apply font-garamond;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
