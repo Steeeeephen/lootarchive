@@ -1,6 +1,12 @@
 import {Grenze_Gotisch, EB_Garamond, Press_Start_2P, Inter, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Nav from "@/components/Nav";
+
+export const metadata = {
+  title: "The Loot Archive",
+  description: "Weapons, armor, and more!",
+}
 
 const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
 
@@ -35,7 +41,14 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full", "antialiased", grenzeGotisch.variable, garamond.variable, pressStart.variable, "font-sans", inter.variable, geistHeading.variable)}
     >
-      <body className="min-h-screen flex flex-col">{children}</body>
+      <body className="min-h-screen flex flex-col bg-background">
+
+        <Nav />
+
+        {children}
+
+
+      </body>
     </html>
   );
 }
