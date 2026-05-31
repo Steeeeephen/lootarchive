@@ -1,5 +1,7 @@
 import { pgTable, serial, varchar, text, decimal, integer, timestamp, primaryKey, boolean } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
+import { user } from "@/db/auth-schema";
+
 
 // ─── Brands ───────────────────────────────────────────────────────────────────
 
@@ -48,9 +50,9 @@ export const products = pgTable("products", {
   brandId: integer("brand_id").references(() => brands.id),
   isActive: boolean("is_active").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-  createdBy: integer("created_by").references(() => users.id),
+  // createdBy: integer("created_by").references(() => users.id),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  updatedBy: integer("updated_by").references(() => users.id)
+  // updatedBy: integer("updated_by").references(() => users.id)
 });
 
 export const productsRelations = relations(products, ({ one, many }) => ({
@@ -90,32 +92,13 @@ export const productCategoriesRelations = relations(productCategories, ({ one })
   }),
 }));
 
-// ─── Users ────────────────────────────────────────────────────────────────────
-
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  firstName: varchar("first_name", { length: 255 }).notNull(),
-  lastName: varchar("last_name", { length: 255 }).notNull(),
-  streetAddress: varchar("street_address", { length: 255 }),
-  city: varchar("city", { length: 255 }),
-  state: varchar("state", { length: 2 }),
-  zipCode: varchar("zip_code", { length: 10 }),
-  email: varchar("email", { length: 255 }).notNull().unique(),
-  password: varchar("password", { length: 255 }).notNull(),
-  role: varchar("role", { length: 50 }).notNull().default("customer"),
-  // roles: customer | admin
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
-
-export const usersRelations = relations(users, ({ many }) => ({
-  orders: many(orders),
-}));
-
-// ─── Orders ───────────────────────────────────────────────────────────────────
+// export const usersRelations = relations(users, ({ many }) => ({
+//   orders: many(orders),
+// }));
 
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id),
+  userId: varchar("user_id",{ length: 255}),
   status: varchar("status", { length: 50 }).notNull().default("pending"),
   // statuses: pending | paid | cancelled
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
@@ -124,14 +107,13 @@ export const orders = pgTable("orders", {
 });
 
 export const ordersRelations = relations(orders, ({ one, many }) => ({
-  user: one(users, {
+  user: one(user, {
     fields: [orders.userId],
-    references: [users.id],
+    references: [user.id],
   }),
   orderItems: many(orderItems),
 }));
 
-// ─── Order Items ──────────────────────────────────────────────────────────────
 
 export const orderItems = pgTable("order_items", {
   id: serial("id").primaryKey(),
@@ -146,6 +128,25 @@ export const orderItems = pgTable("order_items", {
   // unitPrice is snapshot of price at time of purchase
 });
 
+export const shippingProfiles = pgTable("shipping_profiles", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id", { length: 255 }).notNull(),
+  streetAddress: varchar("street_address", { length: 255 }).notNull(),
+  city: varchar("city", { length: 255 }).notNull(),
+  state: varchar("state", { length: 2 }).notNull(),
+  zipCode: varchar("zip_code", { length: 10 }).notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+
+
+export const shippingProfilesRelations = relations(shippingProfiles, ({ one }) => ({
+  user: one(user, {
+    fields: [shippingProfiles.userId],
+    references: [user.id],
+  }),
+}));
+
 export const orderItemsRelations = relations(orderItems, ({ one }) => ({
   order: one(orders, {
     fields: [orderItems.orderId],
@@ -156,3 +157,4 @@ export const orderItemsRelations = relations(orderItems, ({ one }) => ({
     references: [products.id],
   }),
 }));
+
