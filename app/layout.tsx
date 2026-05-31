@@ -1,6 +1,10 @@
-import {Grenze_Gotisch, EB_Garamond, Press_Start_2P} from "next/font/google";
+import {Grenze_Gotisch, EB_Garamond, Press_Start_2P, Inter, Geist } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
+const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const grenzeGotisch = Grenze_Gotisch({
   subsets: ['latin'],
@@ -29,9 +33,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${grenzeGotisch.variable} ${garamond.variable} ${pressStart.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", grenzeGotisch.variable, garamond.variable, pressStart.variable, "font-sans", inter.variable, geistHeading.variable)}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-screen flex flex-col">{children}</body>
     </html>
   );
 }
