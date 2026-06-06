@@ -10,6 +10,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import Image from "next/image";
 
 
 const Nav = () => {
@@ -58,6 +59,16 @@ const Nav = () => {
                                 <Link href="/sign-in"><Button className="font-garamond bg-primary text-surface" variant="default">Sign In</Button></Link>
                                 <Link href="/sign-up"><Button className="font-garamond w-full" variant="outline">Sign Up</Button></Link>
                             </div>
+
+                            <div className="flex justify-center items-center mt-4">
+                                <Image
+                                    src="/images/green-axes.png"
+                                    alt="double green axe"
+                                    width={160}
+                                    height={160}
+                                />
+                            </div>
+
                         </SheetContent>
                     </Sheet>
                 </div>

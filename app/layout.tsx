@@ -31,6 +31,8 @@ const pressStart = Press_Start_2P({
 })
 
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,7 +44,6 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", grenzeGotisch.variable, garamond.variable, pressStart.variable, "font-sans", inter.variable, geistHeading.variable)}
     >
       <body className="min-h-screen flex flex-col bg-background">
-
         <Nav />
 
         {children}
