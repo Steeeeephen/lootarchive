@@ -15,6 +15,13 @@
       "when": 1780351563395,
       "tag": "0001_mute_crystal",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780789818971,
+      "tag": "0002_unusual_blur",
+      "breakpoints": true
     }
   ]
 }

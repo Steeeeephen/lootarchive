@@ -35,10 +35,11 @@ export const categoriesRelations = relations(categories, ({ one, many }) => ({
   productCategories: many(productCategories),
 }));
 
-// ─── Products ─────────────────────────────────────────────────────────────────
+// ─── Page ─────────────────────────────────────────────────────────────────
 
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
+  productCode: varchar("product_code", { length: 50 }).notNull().unique(),
   name: varchar("name", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   description: text("description"),
