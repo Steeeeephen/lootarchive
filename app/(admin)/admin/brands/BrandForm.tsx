@@ -7,7 +7,10 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {createBrand} from "@/actions/brands";
+import {createBrand, updateBrand} from "@/actions/brands";
+import {toast} from "sonner";
+import {brands} from "@/db/schema";
+import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
     name: z
@@ -23,19 +26,40 @@ const formSchema = z.object({
         .optional(),
 });
 
-const BrandForm = () => {
+type BrandFormProps = {
+    brand?: typeof brands.$inferSelect;
+}
+
+const BrandForm = ({ brand }:BrandFormProps) => {
+
+    const router = useRouter();
+
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            slug: "",
-            logo: ""
+            name: brand?.name ?? "",
+            slug: brand?.slug ?? "",
+            logo: brand?.logo ?? ""
         }
     })
 
+    const isEditing = !!brand;
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
-       await createBrand(values)
+        try {
+            if (isEditing) {
+                await updateBrand(brand.id!, values)
+            } else {
+                await createBrand(values)
+            }
+            toast.success(isEditing ? "Brand updated" : "Brand created", {position: "top-right"})
+            form.reset()
+            router.push("/admin/brands");
+        } catch (error) {
+            console.error("Error creating brand:", error);
+            toast.error("Brand failed to update", {position: "top-right"})
+        }
     }
 
 
@@ -112,7 +136,7 @@ const BrandForm = () => {
                     <Button className="cursor-pointer" type="button" variant="outline" onClick={() => form.reset()}>
                         Reset
                     </Button>
-                    <Button className="cursor-pointer" type="submit">Create Brand</Button>
+                    <Button className="cursor-pointer" type="submit">{isEditing ? 'Update Brand' : 'Create Brand' }</Button>
                 </div>
 
 
