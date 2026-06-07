@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@layer components{
+    main {
+        @apply p-4 w-full flex flex-col gap-4;
+    }
+
+    .admin-header {
+        @apply flex gap-8 items-center;
+    }
+
+    .admin-header__title {
+        @apply text-4xl;
+    }
+
+    .admin-link {
+        @apply  hover:underline;
+    }
+}
