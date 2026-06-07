@@ -6,7 +6,7 @@ export const getBrands = async () => {
     return db.select().from(brands).orderBy(brands.id);
 }
 
-export async function getBrandById(id: number) {
-    const result = await db.select().from(brands).where(eq(brands.id, id));
+export async function getBrandById(slug: string) {
+    const result = await db.select().from(brands).where(eq(brands.slug, slug));
     return result[0] ?? null;
 }

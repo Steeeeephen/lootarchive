@@ -41,7 +41,7 @@ const Page = async () => {
                             <TableCell className="table-cell">{brand.name}</TableCell>
                             <TableCell className="table-cell">{brand.slug}</TableCell>
                             <TableCell className="table-cell">
-                                <Link href={`/admin/brands/${brand.id}/edit`}><Button variant="outline" className="cursor-pointer">View</Button></Link>
+                                <Link href={`/admin/brands/${brand.slug}/edit`}><Button variant="outline" className="cursor-pointer">View</Button></Link>
                             </TableCell>
                         </TableRow>
                     )) }

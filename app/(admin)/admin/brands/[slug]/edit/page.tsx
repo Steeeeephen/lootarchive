@@ -3,14 +3,14 @@ import {getBrandById} from "@/lib/data/brands";
 import BrandForm from "@/app/(admin)/admin/brands/BrandForm";
 
 interface pageProps {
-    params: Promise<{ id:number }>
+    params: Promise<{ slug:string }>
 }
 
 const Page = async ({ params } :pageProps) => {
 
-    const { id } = await params;
+    const { slug } = await params;
 
-    const brand = await getBrandById(id);
+    const brand = await getBrandById(slug);
 
     return (
         <>
