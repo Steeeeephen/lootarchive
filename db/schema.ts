@@ -10,6 +10,9 @@ export const brands = pgTable("brands", {
   name: varchar("name", { length: 255 }).notNull().unique(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   logo: varchar("logo", { length: 512}),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
+
 });
 
 export const brandsRelations = relations(brands, ({ many }) => ({
@@ -23,6 +26,8 @@ export const categories = pgTable("categories", {
   name: varchar("name", { length: 255 }).notNull().unique(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   parentId: integer("parent_id"), // null = top-level category
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
 
 export const categoriesRelations = relations(categories, ({ one, many }) => ({
@@ -137,6 +142,7 @@ export const shippingProfiles = pgTable("shipping_profiles", {
   state: varchar("state", { length: 2 }).notNull(),
   zipCode: varchar("zip_code", { length: 10 }).notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
 
 
