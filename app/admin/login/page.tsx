@@ -7,20 +7,19 @@ import {Field, FieldGroup, FieldLabel, FieldLegend} from "@/components/ui/field"
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {toast} from "sonner";
 
 
 const Page = () => {
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
 
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-        setError("");
 
         const { error } = await authClient.signIn.email({
             email,
@@ -28,7 +27,7 @@ const Page = () => {
         });
 
         if (error) {
-            setError(error.message ?? "An unexpected error occurred.");
+            toast.error(error.message ?? "An unexpected error occurred.", {position: "top-right"})
             setLoading(false);
             return;
         }
@@ -42,13 +41,11 @@ const Page = () => {
 
             <div className="w-full max-w-sm">
 
-                {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-2xl font-semibold text-gray-900">Admin Portal</h1>
                     <p className="text-sm text-gray-500 mt-1">Sign in to manage your store</p>
                 </div>
 
-                {/* Card */}
                 <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
                     <FieldGroup className="flex flex-col gap-5">
                         <FieldLegend className="text-lg font-medium text-gray-800 mb-1">Login</FieldLegend>
@@ -86,8 +83,9 @@ const Page = () => {
 
                         <Button
                             type="submit"
+                            disabled={loading}
                             className="w-full mt-2 bg-gray-900 hover:bg-gray-700 text-white font-medium py-2.5 rounded-lg transition-colors">
-                            Sign in
+                            {loading ? "Logging in..." : "Sign in"}
                         </Button>
 
                     </FieldGroup>
