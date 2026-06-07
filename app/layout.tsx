@@ -44,11 +44,7 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", grenzeGotisch.variable, garamond.variable, pressStart.variable, "font-sans", inter.variable, geistHeading.variable)}
     >
       <body className="min-h-screen flex flex-col bg-background">
-        <Nav />
-
         {children}
-
-
       </body>
     </html>
   );
