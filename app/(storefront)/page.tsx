@@ -17,15 +17,15 @@ export default function Home() {
 
               <Link href="/weapons">
                   <Card className={`
-        group relative overflow-hidden
-        bg-surface-alt
-        border border-border
-        shadow-md
-        hover:border-primary/50 hover:shadow-lg
-        transition-all duration-300 cursor-pointer
-        flex flex-col items-center justify-center gap-3 p-6
-        rounded-lg
-    `}>
+                        group relative overflow-hidden
+                        bg-surface-alt
+                        border border-border
+                        shadow-md
+                        hover:border-primary/50 hover:shadow-lg
+                        transition-all duration-300 cursor-pointer
+                        flex flex-col items-center justify-center gap-3 p-6
+                        rounded-lg
+                    `}>
 
 
 
