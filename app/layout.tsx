@@ -1,9 +1,9 @@
 import {Grenze_Gotisch, EB_Garamond, Press_Start_2P, Inter, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Nav from "@/components/Nav";
+import {Metadata} from "next";
 
-export const metadata = {
+export const metadata :Metadata = {
   title: "The Loot Archive",
   description: "Weapons, armor, and more!",
 }

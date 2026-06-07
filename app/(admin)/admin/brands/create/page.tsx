@@ -1,5 +1,5 @@
 import React from 'react'
-import BrandForm from "@/app/(admin)/admin/brands/create/BrandForm";
+import BrandForm from "@/app/(admin)/admin/brands/BrandForm";
 
 
 
