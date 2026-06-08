@@ -5,6 +5,7 @@ import Link from "next/link";
 import {getBrands} from "@/lib/data/brands";
 import {Table, TableHeader, TableRow, TableHead, TableBody, TableCell} from "@/components/ui/table";
 import {Input} from "@/components/ui/input";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 const Page = async () => {
 
@@ -13,6 +14,7 @@ const Page = async () => {
 
     return (
         <main>
+            <PageBreadcrumb />
             <div className="admin-header">
                 <h1 className="admin-header__title">Brand Management</h1>
 
