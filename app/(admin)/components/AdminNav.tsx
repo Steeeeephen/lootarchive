@@ -1,6 +1,9 @@
+
 import React from 'react'
 import { Sidebar , SidebarContent} from "@/components/ui/sidebar";
 import Link from "next/link";
+import {LogoutButton} from "@/app/(admin)/components/LogoutButton";
+
 
 const AdminNav = () => {
     return (
@@ -17,6 +20,7 @@ const AdminNav = () => {
                 <Link className="admin-link" href="/admin/products">Products</Link>
                 <Link className="admin-link" href="/admin/administrators">Administrators</Link>
 
+                <LogoutButton />
             </SidebarContent>
         </Sidebar>
     )
