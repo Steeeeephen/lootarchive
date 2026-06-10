@@ -13,16 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-    >
-      <body className="min-h-screen flex flex-col bg-background">
-        <Nav />
+
+      <div className="storefront-theme min-h-screen flex flex-col bg-background">
 
         {children}
 
-      </body>
-    </html>
+      </div>
   );
 }

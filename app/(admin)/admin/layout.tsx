@@ -14,23 +14,15 @@ export default function RootLayout({children,}: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-            <html
-                lang="en"
-                suppressHydrationWarning
-            >
-            <body className="min-h-screen flex flex-col bg-background">
+            <div className="admin-theme min-h-screen flex flex-col bg-background">
                 <SidebarProvider>
                         <AdminNav />
                     <SidebarTrigger></SidebarTrigger>
-
                     {children}
                 </SidebarProvider>
 
                 <Toaster richColors />
 
-
-            </body>
-            </html>
-
+            </div>
     );
 }
