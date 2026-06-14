@@ -4,6 +4,7 @@ import {getBrands} from "@/lib/data/brands";
 import {Input} from "@/components/ui/input";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import {Checkbox} from "@/components/ui/checkbox";
 
 const BrandsTable = async () => {
 
@@ -25,7 +26,9 @@ const BrandsTable = async () => {
             <TableBody>
                 { allBrands.map((brand) => (
                     <TableRow className="" key={brand.id}>
-                        <TableCell className="table-cell"><Input className="" type="checkbox" value={brand.id} aria-label="Select Brand" /></TableCell>
+                        <TableCell className="table-cell">
+                            <Checkbox className="checkbox" aria-label="Select Brand" />
+                        </TableCell>
                         <TableCell className="table-cell">{brand.id}</TableCell>
                         <TableCell className="table-cell">{brand.name}</TableCell>
                         <TableCell className="table-cell">{brand.slug}</TableCell>

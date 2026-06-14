@@ -1,9 +1,19 @@
 import { z } from "zod";
 
-export const brandSchema = z.object({
+export const brandClientSchema = z.object({
     name: z.string().min(1, "Name is required"),
+    description: z.string().optional(),
     slug: z.string().min(1, "Slug is required"),
-    logo: z.string().optional(),
+    logo: z.instanceof(File).optional(),
 });
 
-export type BrandFormData = z.infer<typeof brandSchema>;
+export const brandServerSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    description: z.string().optional(),
+    slug: z.string().min(1, "Slug is required"),
+    logo: z.string().optional(),
+})
+
+
+export type BrandClientData = z.infer<typeof brandClientSchema>;
+export type BrandServerData = z.infer<typeof brandServerSchema>;
