@@ -1,13 +1,26 @@
-import { pgTable, serial, varchar, text, decimal, integer, timestamp, primaryKey, boolean } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  serial,
+  varchar,
+  text,
+  decimal,
+  integer,
+  timestamp,
+  primaryKey,
+  boolean,
+  pgEnum
+} from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { user } from "@/db/auth-schema";
 
+export const rarityEnum = pgEnum("rarity", ["common","uncommon","rare","epic","legendary","mythic"]);
 
 // ─── Brands ───────────────────────────────────────────────────────────────────
 
 export const brands = pgTable("brands", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull().unique(),
+  description: text("description").notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   logo: varchar("logo", { length: 512}),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -24,6 +37,7 @@ export const brandsRelations = relations(brands, ({ many }) => ({
 export const categories = pgTable("categories", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull().unique(),
+  description: text("description"),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   parentId: integer("parent_id"), // null = top-level category
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -40,25 +54,37 @@ export const categoriesRelations = relations(categories, ({ one, many }) => ({
   productCategories: many(productCategories),
 }));
 
-// ─── Page ─────────────────────────────────────────────────────────────────
 
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   productCode: varchar("product_code", { length: 50 }).notNull().unique(),
   name: varchar("name", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
-  description: text("description"),
+  description: text("description").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   stock: integer("stock").notNull().default(0),
-  rarity: varchar("rarity", { length: 50 }).notNull().default("common"),
-  // rarity tiers: common | uncommon | rare | epic | legendary
+  rarity: rarityEnum("rarity").notNull().default("common"),
   image: varchar("image", { length: 512 }),
-  brandId: integer("brand_id").references(() => brands.id),
-  isActive: boolean("is_active").notNull().default(false),
+  brandId: integer("brand_id").references(() => brands.id, { onDelete: "restrict" }).notNull(),  isActive: boolean("is_active").notNull().default(false),
+  metaTitle: varchar("meta_title", { length: 60 }),
+  metaDescription: varchar("meta_description", { length: 160 }),
+  metaKeywords: varchar("meta_keywords", { length: 255 }),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-  // createdBy: integer("created_by").references(() => users.id),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  // updatedBy: integer("updated_by").references(() => users.id)
+  updatedAt: timestamp("updated_at").notNull().defaultNow().$onUpdate(() => new Date()),
+
+});
+
+
+export const traits = pgTable("traits", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  color: varchar("color", { length: 7 }),  // hex color
+  cssClass: varchar("css_class", { length: 255 }),
+  icon: varchar("icon", { length: 255 }),  // nullable for now
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()),
 });
 
 export const productsRelations = relations(products, ({ one, many }) => ({
@@ -98,9 +124,6 @@ export const productCategoriesRelations = relations(productCategories, ({ one })
   }),
 }));
 
-// export const usersRelations = relations(users, ({ many }) => ({
-//   orders: many(orders),
-// }));
 
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
