@@ -18,4 +18,19 @@
     .admin-link {
         @apply  hover:underline;
     }
+
+    .field{
+        @apply flex flex-col gap-1.5;
+    }
+
+    .admin-form{
+        @apply flex flex-col gap-4;
+    }
+
+
 }
+
+.brand-logo{
+    image-rendering: pixelated;
+}
+

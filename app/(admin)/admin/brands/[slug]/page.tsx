@@ -26,7 +26,7 @@ const Page = async ({ params } :pageProps) => {
                 </div>
 
                 {brand?.logo && (
-                    <Image className="brand-logo" src={brand.logo} alt="Current logo" width={512} height={512} />
+                    <Image className="brand-logo" src={brand.logo} alt="Current logo" width={128} height={128} />
 
                 )}
                 <BrandForm brand={brand} />

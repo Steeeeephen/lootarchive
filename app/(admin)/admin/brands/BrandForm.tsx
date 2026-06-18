@@ -24,7 +24,6 @@ const BrandForm = ({ brand }:BrandFormProps) => {
 
     const router = useRouter();
 
-
     const form = useForm<z.infer<typeof brandClientSchema>>({
         resolver: zodResolver(brandClientSchema),
         defaultValues: {
@@ -49,15 +48,25 @@ const BrandForm = ({ brand }:BrandFormProps) => {
                 formData.append("logo", values.logo);
             }
 
-            if (isEditing) {
+            if (brand) {
                 await updateBrand(brand.id!, formData);
             } else {
                 await createBrand(formData);
             }
-            toast.success(isEditing ? "Brand updated": "Brand created", {position: "top-right"})
-            form.reset()
-            router.push("/admin/brands");
+            toast.success(isEditing ? "Brand updated" : "Brand created", { position: "top-right" })
 
+            if (isEditing) {
+                form.reset({
+                    name: values.name,
+                    description: values.description,
+                    slug: values.slug,
+                    logo: undefined
+                });
+                router.refresh();
+            } else {
+                form.reset();
+                router.push("/admin/brands");
+            }
         }
 
         catch (error) {
@@ -108,6 +117,7 @@ const BrandForm = ({ brand }:BrandFormProps) => {
                                 autoComplete="off"
                                 aria-label="Brand description"
                             />
+                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                         </Field>
                     )}
 
@@ -138,7 +148,7 @@ const BrandForm = ({ brand }:BrandFormProps) => {
                     <Controller
                         name="logo"
                         control={form.control}
-                        render={({ field, fieldState }) => (
+                        render={({ field: { value, ...field }, fieldState }) => (
                             <Field data-invalid={fieldState.invalid} className="flex flex-col gap-1.5">
                                 <FieldLabel htmlFor="logo">
                                     Logo
@@ -151,9 +161,10 @@ const BrandForm = ({ brand }:BrandFormProps) => {
                                     autoComplete="off"
                                     aria-label="logo"
                                     type="file"
-                                    value={undefined}
                                     onChange={(e) => field.onChange(e.target.files?.[0])}
                                 />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+
                             </Field>
                         )}
                     />
