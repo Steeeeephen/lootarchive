@@ -171,10 +171,20 @@ const BrandForm = ({ brand }:BrandFormProps) => {
                 </FieldGroup>
 
                 <div className="flex gap-2">
-                    <Button className="cursor-pointer" type="button" variant="outline" onClick={() => form.reset()}>
+                    <Button
+                        className="cursor-pointer"
+                        type="button"
+                        variant="outline"
+                        onClick={() => form.reset()}
+                    >
                         Reset
                     </Button>
-                    <Button className="cursor-pointer" type="submit">{isEditing ? 'Update Brand' : 'Create Brand' }</Button>
+                    <Button
+                        className="cursor-pointer"
+                        type="submit"
+                    >
+                        {isEditing ? 'Update Brand' : 'Create Brand' }
+                    </Button>
                 </div>
 
 

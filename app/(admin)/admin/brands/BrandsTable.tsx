@@ -1,7 +1,5 @@
-import React from 'react'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {getBrands} from "@/lib/data/brands";
-import {Input} from "@/components/ui/input";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
