@@ -1,5 +1,5 @@
 import React from 'react'
-import {getBrandById} from "@/lib/data/brands";
+import {getBrandBySlug} from "@/lib/data/brands";
 import BrandForm from "@/app/(admin)/admin/brands/BrandForm";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 import Image from 'next/image'
@@ -13,7 +13,7 @@ const Page = async ({ params } :pageProps) => {
 
     const { slug } = await params;
 
-    const brand = await getBrandById(slug);
+    const brand = await getBrandBySlug(slug);
 
     return (
         <>
