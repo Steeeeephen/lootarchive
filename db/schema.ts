@@ -39,7 +39,8 @@ export const categories = pgTable("categories", {
   name: varchar("name", { length: 255 }).notNull().unique(),
   description: text("description"),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
-  parentId: integer("parent_id"), // null = top-level category
+  parentId: integer("parent_id"),
+  image: varchar("image", { length: 512}),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
