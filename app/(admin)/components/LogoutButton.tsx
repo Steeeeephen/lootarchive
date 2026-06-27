@@ -8,6 +8,7 @@ export function LogoutButton() {
 
     return (
         <button
+            className="text-sm font-medium text-muted-foreground hover:text-primary cursor-pointer"
             onClick={() =>
                 authClient.signOut({
                     fetchOptions: {
